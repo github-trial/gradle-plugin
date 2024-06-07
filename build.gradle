@@ -1,0 +1,43 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'maven-publish'
+
+mainClassName = 'hello.HelloWorld'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    implementation "joda-time:joda-time:2.2"
+    testImplementation "junit:junit:4.12"
+}
+
+jar {
+    archiveBaseName = 'gs-gradle/initial'
+    archiveVersion =  '0.1.0'
+}
+
+group = 'com.example'
+version = '1.0.0'
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/github-trial/gradle-plugin")
+            credentials {
+                username = "github-trial"
+                password = "XXXX"
+            }
+        }
+    }
+}
+
